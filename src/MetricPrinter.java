@@ -52,7 +52,9 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
 	 */
 	private void printMetrics()
 	{
-		System.out.println("\n-----------------------------\n");
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+		System.out.println();
 		
 		printMaxSites();
 		printWorkMetrics();
@@ -71,6 +73,8 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
 		startTable();
 		
 		addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
+		addHorizontalSeparator();
+		addRow();
 		addRow("Website with most hits:");
 		printMaxSite(currentMetrics);
 		printMaxSite(totalMetrics);
@@ -88,7 +92,7 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
 		}
 		
 		addRow();
-		endTable();
+//		endTable();
 	}
 	
 	/**
@@ -117,8 +121,8 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
 		Metrics totalMetrics = metricManager.getTotalMetrics();
 		
 		// RPS
-		startTable();
-		addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
+//		startTable();
+//		addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
 		addRow("Total requests:",
 				"" + currentMetrics.totalRequests,
 			   	"" + totalMetrics.totalRequests);
@@ -143,7 +147,7 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
 		// Status codes
 		addRow();
 		addRow("Status code count:");
-		addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
+//		addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
 		HashMap<Character, Integer> currentStatusCodes = currentMetrics.statusCodeCounts;
 		HashMap<Character, Integer> totalStatusCodes = totalMetrics.statusCodeCounts;
 		

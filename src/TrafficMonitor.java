@@ -21,10 +21,10 @@ public class TrafficMonitor
 	
 	public static void main(String[] args) throws Exception
 	{
-		args = new String[]{"traffic", "access_log"};
-		if (args.length != 2)
+		args = new String[]{"access_log"};
+		if (args.length < 1)
 		{
-			System.out.println("Usage: TrafficMonitor <log-file>");
+			System.out.println("Error: expecting a log file");
 			return;
 		}
 		
@@ -37,7 +37,7 @@ public class TrafficMonitor
 		metricManagerThread.start();
 		
 		// Create a reader for the log file
-		File file = new File(args[1]);
+		File file = new File(args[0]);
 		LogParser logParser = new LogParser(metricManager);
 		Tailer tailer = Tailer.create(file, logParser);
 		

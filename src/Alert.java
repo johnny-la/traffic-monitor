@@ -38,9 +38,9 @@ public class Alert
 	{
 		String output = "";
 		if (!recovery)
-			output += "High traffic generated an alert";
+			output += "[CRITICAL] High traffic generated an alert";
 		else
-			output += "High traffic has recovered";
+			output += "[RECOVERY] High traffic has recovered";
 		
 		output += " - hits = " + hits + " triggered at " + date;
 		

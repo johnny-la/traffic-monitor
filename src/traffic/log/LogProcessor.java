@@ -19,6 +19,10 @@ public class LogProcessor extends TailerListenerAdapter
     /** Monitors metrics from a log file */
     private MetricManager metricManager;
     
+    /**
+     * Creates a process for logs
+     * @param metricManager Manager that will store metrics processed from a log file
+     */
     public LogProcessor(MetricManager metricManager)
     {
         this.metricManager = metricManager;

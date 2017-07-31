@@ -14,16 +14,4 @@ public class Log
     public String requestProtocol;
     public String status;
     public String bytes;
-    
-    public Log() {}
-    
-    /**
-     * Creates a log with placeholder fields
-     */
-    public Log(String placeholder)
-    {
-        host = id = authUser = date = request = 
-            requestMethod = requestUrl = requestProtocol = 
-            status = bytes = placeholder;
-    }
 }

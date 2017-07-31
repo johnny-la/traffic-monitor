@@ -26,7 +26,9 @@ public class TestTrafficMonitor
      */
     public void testAlerts(double highTrafficRps, long highTrafficTimeWindow) 
     {
+        // The number of requests which will trigger the alert
         int thresholdRequestCount = (int) Math.ceil(highTrafficRps * (highTrafficTimeWindow / 1000.0));
+        // The delay between sending each request
         double delay = (1000.0 / highTrafficRps);
 
         MetricManager metricManager = new MetricManager(highTrafficRps, highTrafficTimeWindow, (long) delay);
@@ -50,8 +52,7 @@ public class TestTrafficMonitor
                 new Alert(thresholdRequestCount, false, alertTimes.get(0))}, 
                 metricManager.getAlerts());
 
-        // Sustain the RPS at the threshold and make sure no additional alerts
-        // are triggered
+        // Sustain the RPS at the threshold and make sure no additional alerts are triggered
         currentTime += delay;
         for (int i = 0; i < thresholdRequestCount; i++) 
         {

@@ -25,7 +25,7 @@ public class TrafficMonitor
     
     public static void main(String[] args) throws Exception
     {
-        args = new String[]{"access_log"};
+        args = new String[]{"test.log"};
         if (args.length < 1)
         {
             System.out.println("Error: expecting a log file");

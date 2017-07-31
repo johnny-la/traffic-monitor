@@ -11,10 +11,10 @@ import traffic.monitor.Metrics;
  */
 public class MetricPrinter extends PrettyPrinter implements Runnable
 {
-    // Stores metrics analyzed from logs
+    /** Stores metrics analyzed from logs */
     private MetricManager metricManager;
     
-    // The amount of delay between printing each batch of metrics
+    /** The amount of delay between printing each batch of metrics */
     private long delay;
     
     public MetricPrinter(MetricManager metricManager, long delay)
@@ -125,8 +125,6 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
         Metrics totalMetrics = metricManager.getTotalMetrics();
         
         // RPS
-//        startTable();
-//        addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
         addRow("Total requests:",
                 "" + currentMetrics.totalRequests,
                    "" + totalMetrics.totalRequests);
@@ -151,7 +149,6 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
         // Status codes
         addRow();
         addRow("Status code count:");
-//        addRow("", "Past 10 sec.", "Since start (" + totalMetrics.getTimeSinceStart() + "s)");
         HashMap<Character, Integer> currentStatusCodes = currentMetrics.statusCodeCounts;
         HashMap<Character, Integer> totalStatusCodes = totalMetrics.statusCodeCounts;
         

@@ -35,6 +35,7 @@ public class Metrics
      */
     public void reset()
     {
+        websites.clear();
         maxSiteHits = 0;
         maxSite = null;
         statusCodeCounts.clear();

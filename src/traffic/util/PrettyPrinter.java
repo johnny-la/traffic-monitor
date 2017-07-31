@@ -7,7 +7,7 @@ public class PrettyPrinter
     /** Minimum number of spaces in a column */
     private static final int MIN_COLUMN_LENGTH = 10;
     /** Padding after longest element in column */
-    private static final int COLUMN_PADDING = 5;    
+    private static final int COLUMN_PADDING = 3;    
     
     /** If a row contains this entry, print a horizontal separator in this row */
     private static final String HORIZONTAL_SEPARATOR_CODE = "---";
@@ -115,7 +115,7 @@ public class PrettyPrinter
     {
         for (int j = 0; j < columnLengths.size(); j++)
         {
-            for (int k = 0; k < columnLengths.get(j)/1.85; k++)
+            for (int k = 0; k < columnLengths.get(j)/1.88; k++)
             {
                 System.out.print("--");
             }

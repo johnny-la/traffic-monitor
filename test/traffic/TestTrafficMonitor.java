@@ -20,6 +20,11 @@ public class TestTrafficMonitor
         testAlerts(1000, 120000);
     }
 
+    /**
+     * Test alerts for the given parameters.
+     * @param highTrafficRps If average RPS exceeds this value, trigger an alert
+     * @param highTrafficTimeWindow The time window for which traffic monitoring is enabled
+     */
     public void testAlerts(double highTrafficRps, long highTrafficTimeWindow) 
     {
         int thresholdRequestCount = (int) Math.ceil(highTrafficRps * (highTrafficTimeWindow / 1000.0));
@@ -34,7 +39,8 @@ public class TestTrafficMonitor
         
         // Trigger the critical threshold
         int currentRequestCount = 0;
-        for (; currentRequestCount < thresholdRequestCount; currentRequestCount++) {
+        for (; currentRequestCount < thresholdRequestCount; currentRequestCount++) 
+        {
             metricManager.addRequest((long)currentTime);
             metricManager.monitorThroughput((long)currentTime);
 

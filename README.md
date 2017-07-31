@@ -20,3 +20,7 @@ To improve the application's design, I would do the following:
 - When an alert is triggered, `MetricPrinter` should print the alert instead of `MetricManager.addAlert()`. This change would migrate all printing functionality to the `MetricPrinter` class. *(Note: since this change potentially required a new Listener interface, I decided to omit this change since it is a relatively small feature)*
 - Create an `AlertSchema` class that stores rules and templates for triggering alerts. As a result, different types of alerts could be added in a scalable and maintainable way. To monitor the metrics, the `MetricMonitor` would hold a list of `AlertSchemas`, which would then trigger a variable amount of alerts.  
 - Implement a Linter to detect potential errors in the codebase and identify convention-breaking code
+
+## Sample Output
+<img src="https://user-images.githubusercontent.com/10332234/28775178-7e2970d4-75a5-11e7-93d9-3281714c20bc.png" width="75%" height="75%">
+

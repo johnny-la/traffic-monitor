@@ -1,6 +1,15 @@
 # Traffic Monitor
 
-Monitors traffic from an Apache HTTP log.
+Monitors traffic from an Apache HTTP log
+
+## Setup
+```
+$ git clone <project-url>
+$ cd <project-dir>
+$ mvn clean install
+### Note: Use JAR with dependencies ###
+$ java -jar target/traffic-monitor-0.0.1-SNAPSHOT-jar-with-dependencies.jar path/to/log/file
+```
 
 ## Improvements
 To improve the application's design, I would do the following

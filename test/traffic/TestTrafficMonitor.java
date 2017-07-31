@@ -23,7 +23,7 @@ public class TestTrafficMonitor
     /**
      * Test alerts for the given parameters.
      * @param highTrafficRps If average RPS exceeds this value, trigger an alert
-     * @param highTrafficTimeWindow The time window for which traffic monitoring is enabled
+     * @param highTrafficTimeWindow The time window for which traffic is monitored
      */
     public void testAlerts(double highTrafficRps, long highTrafficTimeWindow) 
     {

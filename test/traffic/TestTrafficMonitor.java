@@ -12,9 +12,6 @@ import traffic.monitor.MetricManager;
 
 public class TestTrafficMonitor 
 {
-    // Send requests quicker to ensure an alert is captured
-    private static final double REQUEST_DELAY_MULTIPLIER = 0.9;
-
     @Test
     public void testAlerts() 
     {

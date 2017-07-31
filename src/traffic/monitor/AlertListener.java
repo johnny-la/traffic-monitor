@@ -5,9 +5,9 @@ package traffic.monitor;
  */
 interface AlertListener
 {
-	/** 
-	 * Called when an alert is triggered
-	 * @param alert The alert which was triggered
-	 */
-	void alertTriggered(Alert alert);
+    /** 
+     * Called when an alert is triggered
+     * @param alert The alert which was triggered
+     */
+    void alertTriggered(Alert alert);
 }

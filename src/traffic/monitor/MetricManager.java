@@ -25,6 +25,7 @@ public class MetricManager
         currentMetrics = new Metrics();
         totalMetrics = new Metrics();
         
+        throughputMonitors = new ArrayList<ThroughputMonitor>();
         alerts = new ArrayList<Alert>();
     }
 
@@ -45,7 +46,7 @@ public class MetricManager
         // Add a request to each throughput monitor
         for (int i = 0; i < throughputMonitors.size(); i++)
         {
-        		throughputMonitors.get(i).addRequest(currentTime);
+                throughputMonitors.get(i).addRequest(currentTime);
         }
     }
     
@@ -57,21 +58,21 @@ public class MetricManager
      */
     public void addThroughputMonitor(double highTrafficRpsThreshold, long highTrafficTimeWindow, long delay)
     {
-    		// Create the throughput monitor
-    		ThroughputMonitor monitor = new ThroughputMonitor(highTrafficRpsThreshold, highTrafficTimeWindow, delay);
-    		throughputMonitors.add(monitor);
-    		
-    		// Listen to throughput alerts 
-    		monitor.addAlertListener(new AlertListener() {
-    			public void alertTriggered(Alert alert)
-    			{
-    				addAlert(alert);
-    			}
-    		});
-    		
-    		// Start monitoring throughput in a new thread
-    		Thread monitorThread = new Thread(monitor);
-    		monitorThread.start();
+        // Create the throughput monitor
+        ThroughputMonitor monitor = new ThroughputMonitor(highTrafficRpsThreshold, highTrafficTimeWindow, delay);
+        throughputMonitors.add(monitor);
+            
+        // Listen to throughput alerts 
+        monitor.addAlertListener(new AlertListener() {
+            public void alertTriggered(Alert alert)
+            {
+                addAlert(alert);
+            }
+        });
+        
+        // Start monitoring throughput in a new thread
+        Thread monitorThread = new Thread(monitor);
+        monitorThread.start();
     }
     
     /**

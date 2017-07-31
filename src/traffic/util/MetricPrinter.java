@@ -61,6 +61,7 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
      */
     private void printMetrics()
     {
+        // Clear the screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
         System.out.println();
@@ -101,7 +102,6 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
         }
         
         addRow();
-//        endTable();
     }
     
     /**
@@ -111,14 +111,7 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
      */
     private void printMaxSite(Metrics metrics)
     {
-        if (metrics.maxSite != null)
-        {
-            addEntry(metrics.maxSite.getName() + " (" + metrics.maxSiteHits + " hits)");
-        }
-        else
-        {
-            addEntry("None");
-        }
+        addEntry((metrics.maxSite != null)? metrics.maxSite.getName() + " (" + metrics.maxSiteHits + " hits)" : "None");
     }
     
     /**
@@ -172,14 +165,16 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
      */
     private void printAlertHistory()
     {
-        // Alert history
         startTable();
         addRow("Alert History:");
+        
+        // Print each alert
         ArrayList<Alert> alerts = metricManager.getAlerts();
         for (int i = 0; i < alerts.size(); i++)
         {
             addRow(alerts.get(i).toString());
         }
+        
         endTable();
     }
     

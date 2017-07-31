@@ -22,5 +22,5 @@ To improve the application's design, I would do the following:
 - Implement a Linter to detect potential errors in the codebase and identify convention-breaking code
 
 ## Sample Output
-<img src="https://user-images.githubusercontent.com/10332234/28775178-7e2970d4-75a5-11e7-93d9-3281714c20bc.png" width="75%" height="75%">
+<img src="https://user-images.githubusercontent.com/10332234/28776657-6ae09d66-75ac-11e7-900c-ae3d920308c9.png" width="75%" height="75%">
 

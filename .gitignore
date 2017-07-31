@@ -15,7 +15,6 @@ local.properties
 .externalToolBuilders/
 
 # Maven
-log/
 target/
 
 # Locally stored "Eclipse launch configurations"

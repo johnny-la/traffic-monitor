@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import traffic.monitor.Alert;
-import traffic.monitor.MetricManager;
+import traffic.monitor.ThroughputMonitor;
 
 public class TestTrafficMonitor 
 {
@@ -31,7 +31,7 @@ public class TestTrafficMonitor
         // The delay between sending each request
         double delay = (1000.0 / highTrafficRps);
 
-        MetricManager metricManager = new MetricManager(highTrafficRps, highTrafficTimeWindow, (long) delay);
+        ThroughputMonitor monitor = new ThroughputMonitor(highTrafficRps, highTrafficTimeWindow, (long)delay);
         // The timestamps of each expected alert
         ArrayList<Long> alertTimes = new ArrayList<Long>(); 
 
@@ -42,22 +42,22 @@ public class TestTrafficMonitor
         int currentRequestCount = 0;
         for (; currentRequestCount < thresholdRequestCount; currentRequestCount++) 
         {
-            metricManager.addRequest((long)currentTime);
-            metricManager.monitorThroughput((long)currentTime);
+            monitor.addRequest((long)currentTime);
+            monitor.update((long)currentTime);
 
             currentTime += delay;
         }
         alertTimes.add((long)(currentTime-delay));
         alertEquals(new Alert[]{ 
                 new Alert(thresholdRequestCount, false, alertTimes.get(0))}, 
-                metricManager.getAlerts());
+                monitor.getAlerts());
 
         // Sustain the RPS at the threshold and make sure no additional alerts are triggered
         currentTime += delay;
         for (int i = 0; i < thresholdRequestCount; i++) 
         {
-            metricManager.addRequest((long)currentTime);
-            metricManager.monitorThroughput((long)currentTime);
+            monitor.addRequest((long)currentTime);
+            monitor.update((long)currentTime);
 
             // Don't increment the timer after the last request
             if (i != thresholdRequestCount - 1)
@@ -65,50 +65,50 @@ public class TestTrafficMonitor
 
             alertEquals(new Alert[] { 
                     new Alert(thresholdRequestCount, false, alertTimes.get(0))}, 
-                    metricManager.getAlerts());
+                    monitor.getAlerts());
         }
 
         // Advance time, but not enough to decrease the RPS
         currentTime += delay;
-        metricManager.monitorThroughput((long)currentTime);
+        monitor.update((long)currentTime);
         alertEquals(new Alert[] { 
                 new Alert(thresholdRequestCount, false, alertTimes.get(0))}, 
-                metricManager.getAlerts());
+                monitor.getAlerts());
 
         // Go below the threshold
         currentTime += delay;
         currentRequestCount--;
-        metricManager.monitorThroughput((long) currentTime);
+        monitor.update((long) currentTime);
         alertTimes.add((long)currentTime);
         alertEquals(new Alert[] { 
                 new Alert(thresholdRequestCount, false, alertTimes.get(0)), 
                 new Alert(thresholdRequestCount - 1, true, alertTimes.get(1))},
-                metricManager.getAlerts());
+                monitor.getAlerts());
 
         // Surpass the threshold
         int overshootRequestCount = 1 + thresholdRequestCount * 4;
         for (int i = 0; i < overshootRequestCount; i++) 
         {
-            metricManager.addRequest((long)currentTime);
+            monitor.addRequest((long)currentTime);
         }
-        metricManager.monitorThroughput((long)currentTime);
+        monitor.update((long)currentTime);
         alertTimes.add((long)currentTime);
         alertEquals(new Alert[] { 
                 new Alert(thresholdRequestCount, false, alertTimes.get(0)), 
                 new Alert(thresholdRequestCount - 1, true, alertTimes.get(1)),
                 new Alert(thresholdRequestCount * 5, false, alertTimes.get(2))}, 
-                metricManager.getAlerts());
+                monitor.getAlerts());
 
         // Slide the traffic window until RPS = 0
         currentTime += highTrafficTimeWindow + 1;
-        metricManager.monitorThroughput((long)currentTime);
+        monitor.update((long)currentTime);
         alertTimes.add((long)currentTime);
         alertEquals(new Alert[] { 
                 new Alert(thresholdRequestCount, false, alertTimes.get(0)), 
                 new Alert(thresholdRequestCount - 1, true, alertTimes.get(1)),
                 new Alert(thresholdRequestCount * 5, false, alertTimes.get(2)), 
                 new Alert(0, true, alertTimes.get(3))}, 
-                metricManager.getAlerts());
+                monitor.getAlerts());
     }
 
     /**

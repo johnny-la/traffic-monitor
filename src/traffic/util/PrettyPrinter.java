@@ -12,6 +12,7 @@ public class PrettyPrinter
     /** If a row contains this entry, print a horizontal separator in this row */
     private static final String HORIZONTAL_SEPARATOR_CODE = "---";
     
+    /** Stores the contents of the current table to print */
     private ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
     
     /**

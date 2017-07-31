@@ -17,6 +17,11 @@ public class MetricPrinter extends PrettyPrinter implements Runnable
     /** The amount of delay between printing each batch of metrics */
     private long delay;
     
+    /**
+     * Creates printer for metrics.
+     * @param metricManager Stores the metrics to print
+     * @param delay The amount of milliseconds to wait between printing each batch of metrics
+     */
     public MetricPrinter(MetricManager metricManager, long delay)
     {
         this.metricManager = metricManager;

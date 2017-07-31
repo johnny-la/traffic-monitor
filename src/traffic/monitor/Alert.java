@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 public class Alert 
 {
+    /** Formats dates in a human-readable format */
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
     
     /** The number of website hits when the alert was triggered */

@@ -4,22 +4,22 @@ import java.util.Queue;
 
 public class MetricManager implements Runnable
 {	
-	private Metrics currentMetrics;	// Metrics recorded since the last flush
-	private Metrics totalMetrics;	// Metrics recorded since this manager was created
+	private Metrics currentMetrics;	/** Metrics recorded since the last flush */
+	private Metrics totalMetrics;	/** Metrics recorded since this manager was created */
 	
-	// Stores timestamps for all requests in the past two minutes
+	/** Stores timestamps for all requests in the past two minutes */
 	private Queue<Long> requestTimestamps;
-	// Stores all alerts for historical reasons
+	/** Stores all alerts for historical reasons */
 	private ArrayList<Alert> alerts;
 	
-	// If average RPS surpasses this value, log a warning
+	/** If average RPS surpasses this value, log a warning */
 	private double highTrafficRpsThreshold = 70.0;
-	// The time window (in milliseconds) for which high traffic is detected
+	/** The time window (in milliseconds) for which high traffic is detected */
 	private long highTrafficTimeWindow = 12000;
-	// True if the system is currently experiencing high traffic
+	/** True if the system is currently experiencing high traffic */
 	private boolean highTrafficDetected;
 	
-	// Every "delay" milliseconds, throughput is monitored for high traffic
+	/** Every "delay" milliseconds, throughput is monitored for high traffic */
 	private long delay;
 	
 	/**

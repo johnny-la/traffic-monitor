@@ -24,7 +24,7 @@ public class TrafficMonitor
 		args = new String[]{"traffic", "access_log"};
 		if (args.length != 2)
 		{
-			System.out.println("Usage: " + args[0] + " <log-file>");
+			System.out.println("Usage: TrafficMonitor <log-file>");
 			return;
 		}
 		

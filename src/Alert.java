@@ -34,24 +34,6 @@ public class Alert
 		return DATE_FORMATTER.format(calendar.getTime());
 	}
 	
-	/**
-	 * Returns true if this is a recovery alert
-	 * @return True if a recovery triggered this alert. Returns false if this is a critical alert.
-	 */
-	public boolean isRecovery()
-	{
-		return recovery;
-	}
-	
-	/**
-	 * Returns the number of website hits recorded when the alert triggered
-	 * @return Number of hits when alert was triggered
-	 */
-	public int getHits()
-	{
-		return hits;
-	}
-	
 	public String toString()
 	{
 		String output = "";

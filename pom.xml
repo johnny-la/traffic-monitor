@@ -9,12 +9,31 @@
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
+        <!--  groupId>org.apache.maven.plugins</groupId-->
+        <artifactId>maven-assembly-plugin</artifactId> <!--maven-compiler-plugin (default), maven-jar-plugin-->
+        <version>2.2.1</version> <!-- 3.5.1 -->
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>TrafficMonitor</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
         </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -23,7 +42,7 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.5</version>
+      <version>2.5</version> <!-- 2.5 -->
     </dependency>
     <!-- https://mvnrepository.com/artifact/junit/junit -->
     <dependency>

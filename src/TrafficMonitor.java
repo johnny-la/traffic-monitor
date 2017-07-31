@@ -38,8 +38,8 @@ public class TrafficMonitor
 		
 		// Create a reader for the log file
 		File file = new File(args[1]);
-		LogReader logReader = new LogReader(metricManager);
-		Tailer tailer = Tailer.create(file, logReader);
+		LogParser logParser = new LogParser(metricManager);
+		Tailer tailer = Tailer.create(file, logParser);
 		
 		// Print metrics every 10-second interval
 		MetricPrinter metricPrinter = new MetricPrinter(metricManager, METRIC_PRINT_INTERVAL);

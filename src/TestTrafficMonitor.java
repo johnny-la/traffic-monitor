@@ -1,5 +1,3 @@
-
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -7,18 +5,21 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-public class TestTrafficMonitor {
+public class TestTrafficMonitor 
+{
 	// Send requests quicker to ensure an alert is captured
 	private static final double REQUEST_DELAY_MULTIPLIER = 0.9;
 
 	@Test
-	public void testAlerts() {
+	public void testAlerts() 
+	{
 		testAlerts(10, 5000);
 		testAlerts(500, 1000);
 		testAlerts(1000, 120000);
 	}
 
-	public void testAlerts(double highTrafficRps, long highTrafficTimeWindow) {
+	public void testAlerts(double highTrafficRps, long highTrafficTimeWindow) 
+	{
 		int thresholdRequestCount = (int) Math.ceil(highTrafficRps * (highTrafficTimeWindow / 1000.0));
 		double delay = (1000.0 / highTrafficRps);
 
@@ -88,7 +89,8 @@ public class TestTrafficMonitor {
 				new Alert(thresholdRequestCount * 5, false), new Alert(0, true) }, metricManager.getAlerts());
 	}
 
-	private void alertEquals(Alert[] expected, ArrayList<Alert> actual) {
+	private void alertEquals(Alert[] expected, ArrayList<Alert> actual) 
+	{
 		assertEquals(expected.length, actual.size());
 
 		for (int i = 0; i < expected.length; i++) {

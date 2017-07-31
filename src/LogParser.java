@@ -1,17 +1,37 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LogParser
+import org.apache.commons.io.input.TailerListenerAdapter;
+
+/**
+ * Reads a log file in Apache format and parses its contents
+ */
+public class LogParser extends TailerListenerAdapter
 {
+	/** Extracts information about a log line */
 	private static final String LOG_PATTERN = "(\\S+) (\\S+) (\\S+) \\[(\\d{1,2}\\/[a-zA-Z]+\\/\\d+:\\d{2}:\\d{2}:\\d{2} [+\\-] ?\\d{4})\\] \"(.{1,})\" (\\d+) (\\d+)";
 	//"([.\d]+) (\S+) (\S+) \[(\d{1,2}\/[a-zA-Z]+\/\d+:\d{2}:\d{2}:\d{2} [+\-] ?\d{4})\] "(.{1,})" (\d+) (\d+)";
+	/** The number of fields in a log line */
 	private static final int LOG_FIELD_COUNT = 7;
 	
 	private static final String IPV4_PATTERN = "(\\d{1,3}\\.){3}\\d{1,3}";
 		// (\d{1,3}\.){3}\d{1,3}
+	
+	/** Monitors metrics from a log file */
+	private MetricManager metricManager;
+	
+	public LogParser(MetricManager metricManager)
+	{
+		this.metricManager = metricManager;
+	}
+	
+	public void handle(String line)
+	{
+		Log log = LogParser.parseLine(line);
+		metricManager.analyze(log);
+	}
 	
 	/**
 	 * Returns a log object parsed from the given log line

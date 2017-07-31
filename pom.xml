@@ -7,6 +7,7 @@
   <description>Monitors traffic from an Apache HTTP log file</description>
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test/traffic</testSourceDirectory> 
     <plugins>
       <plugin>
         <!--  groupId>org.apache.maven.plugins</groupId-->
@@ -18,7 +19,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>TrafficMonitor</mainClass>
+              <mainClass>traffic.TrafficMonitor</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
@@ -49,6 +50,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

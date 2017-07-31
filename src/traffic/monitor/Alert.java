@@ -6,9 +6,13 @@ public class Alert
 {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
     
+    /** The number of website hits when the alert was triggered */
     private int hits;
-    private boolean recovery;    // True if this is a recovery alert. Else this is critical alert
+    /** True if this is a recovery alert. Else this is critical alert */
+    private boolean recovery;
+    /** The timestamp when the alert was triggered */
     private long timestamp;
+    /** The date when the alert was triggered */
     private String date;
     
     /**

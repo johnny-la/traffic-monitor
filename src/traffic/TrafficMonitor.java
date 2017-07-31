@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.apache.commons.io.input.Tailer;
 
-import traffic.log.LogParser;
+import traffic.log.LogProcessor;
 import traffic.monitor.MetricManager;
 import traffic.util.MetricPrinter;
 
@@ -42,8 +42,8 @@ public class TrafficMonitor
         
         // Create a reader for the log file
         File file = new File(args[0]);
-        LogParser logParser = new LogParser(metricManager);
-        Tailer tailer = Tailer.create(file, logParser);
+        LogProcessor logProcessor = new LogProcessor(metricManager);
+        Tailer tailer = Tailer.create(file, logProcessor);
         
         // Print metrics every 10-second interval
         MetricPrinter metricPrinter = new MetricPrinter(metricManager, METRIC_PRINT_INTERVAL);

@@ -74,7 +74,7 @@ public class Metrics
      */
     private double getSuccessRate()
     {
-        return (statusCodeCounts.containsKey('2'))? statusCodeCounts.get('2')/(double)totalRequests: 0.0;
+        return (statusCodeCounts.containsKey('2'))? statusCodeCounts.get('2')/(double)totalRequests: 0.0; 
     }
     
     /**

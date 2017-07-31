@@ -1,7 +1,6 @@
 package traffic.util;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import traffic.monitor.Alert;
 import traffic.monitor.MetricManager;

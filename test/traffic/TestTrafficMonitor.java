@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import traffic.log.Log;
 import traffic.monitor.Alert;
 import traffic.monitor.MetricManager;
 
@@ -17,7 +16,7 @@ public class TestTrafficMonitor
     {
         testAlerts(10, 5000);
         testAlerts(500, 1000);
-        testAlerts(1000, 120000);
+        testAlerts(1000, 120000); 
     }
 
     /**
@@ -32,7 +31,7 @@ public class TestTrafficMonitor
 
         MetricManager metricManager = new MetricManager(highTrafficRps, highTrafficTimeWindow, (long) delay);
         // The timestamps of each expected alert
-        ArrayList<Long> alertTimes = new ArrayList<Long>();
+        ArrayList<Long> alertTimes = new ArrayList<Long>(); 
 
         long startTime = System.currentTimeMillis();
         double currentTime = startTime;

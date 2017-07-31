@@ -5,13 +5,15 @@ import java.util.Queue;
 
 import traffic.log.Log;
 
-public class MetricManager implements Runnable
+public class MetricManager
 {    
     /** Metrics recorded since the last flush */
     private Metrics currentMetrics;  
     /** Metrics recorded since this manager was created */
     private Metrics totalMetrics;    
     
+    /** A list of objects that monitor throughput */
+    private ArrayList<ThroughputMonitor> throughputMonitors;
     /** Stores all alerts for historical reasons */
     private ArrayList<Alert> alerts;
     
@@ -25,7 +27,7 @@ public class MetricManager implements Runnable
         
         alerts = new ArrayList<Alert>();
     }
-    
+
     /**
      * Updates internal metrics based on the contents of the log line 
      * @param log The log line to analyze
@@ -35,10 +37,41 @@ public class MetricManager implements Runnable
         if (log == null)
             return;
         
+        long currentTime = System.currentTimeMillis();
+        
         analyze(log, currentMetrics);
         analyze(log, totalMetrics);
         
-        addRequest(System.currentTimeMillis());
+        // Add a request to each throughput monitor
+        for (int i = 0; i < throughputMonitors.size(); i++)
+        {
+        		throughputMonitors.get(i).addRequest(currentTime);
+        }
+    }
+    
+    /**
+     * Creates a monitor which analyzes throughput for critical values
+     * @param highTrafficRpsThreshold If average RPS surpasses this value, create an alert 
+     * @param highTrafficTimeWindow The time window (in milliseconds) for which high traffic is detected
+     * @param delay Every "delay" milliseconds, throughput is monitored for high traffic
+     */
+    public void addThroughputMonitor(double highTrafficRpsThreshold, long highTrafficTimeWindow, long delay)
+    {
+    		// Create the throughput monitor
+    		ThroughputMonitor monitor = new ThroughputMonitor(highTrafficRpsThreshold, highTrafficTimeWindow, delay);
+    		throughputMonitors.add(monitor);
+    		
+    		// Listen to throughput alerts 
+    		monitor.addAlertListener(new AlertListener() {
+    			public void alertTriggered(Alert alert)
+    			{
+    				addAlert(alert);
+    			}
+    		});
+    		
+    		// Start monitoring throughput in a new thread
+    		Thread monitorThread = new Thread(monitor);
+    		monitorThread.start();
     }
     
     /**
@@ -140,13 +173,10 @@ public class MetricManager implements Runnable
     
     /** 
      * Logs and stores the given alert 
-     * @param hits The total number of hits when the alert was triggered
-     * @param recovery If true, create a recovery alert. Otherwise, create a critical alert
-     * @param currentTime The timestamp when the alert is triggered
+     * @param alert The alert to record
      */
-    private void addAlert(int hits, boolean recovery, long currentTime)
+    private void addAlert(Alert alert)
     {
-        Alert alert = new Alert(hits, recovery, currentTime);
         alerts.add(alert);
         // Log the alert right when it happens
         System.out.println(alert);

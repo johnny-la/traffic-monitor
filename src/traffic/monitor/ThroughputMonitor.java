@@ -7,10 +7,12 @@ import java.util.Queue;
 /**
  * Monitors metrics and triggers relevant alerts 
  */
-public class ThroughputMonitor
+public class ThroughputMonitor implements Runnable
 {
     /** Stores timestamps for all requests in the past "highTrafficTimeWindow" milliseconds */
     private Queue<Long> requestTimestamps;
+    /** Listeners that are notified whenever this monitor triggers an alert */
+    private ArrayList<AlertListener> alertListeners;
     
     /** If average RPS surpasses this value, log a warning */
     private double highTrafficRpsThreshold;
@@ -35,21 +37,35 @@ public class ThroughputMonitor
         this.delay = delay;
 
         requestTimestamps = new LinkedList<Long>();
+        alertListeners = new ArrayList<AlertListener>();
     }
     
     /**
-     * Monitors the requests per second, and logs a warning if a threshold is surpassed
+     * Monitors throughput regularly to detect high traffic
      */
-    public void monitorThroughput()
+    public void run()
     {
-        monitorThroughput(System.currentTimeMillis());
+        while (true)
+        {
+            update(System.currentTimeMillis());
+            
+            // Sleep for "delay" seconds
+            try
+            {
+                Thread.sleep(delay);
+            }
+            catch (InterruptedException e)
+            {
+                System.out.println(e.getStackTrace());
+            }
+        }
     }
     
     /**
      * Monitors the requests per second, and logs a warning if the threshold is surpassed
      * @param currentTime The current time of the system
      */
-    public void monitorThroughput(long currentTime)
+    public void update(long currentTime)
     {
         expireOldRequests(currentTime);
         double requestsPerSecond = getCurrentRps();
@@ -70,7 +86,7 @@ public class ThroughputMonitor
     
     /** 
      * Adds a request performed at the given timestamp. 
-     * Allows the manager to track throughput.
+     * Allows the monitor to track throughput.
      * @param currentTime The timestamp when the request was created
      */
     public void addRequest(long currentTime)
@@ -85,6 +101,31 @@ public class ThroughputMonitor
     public double getCurrentRps() 
     {
         return requestTimestamps.size() / (highTrafficTimeWindow/1000.0);
+    }
+    
+    /**
+     * Adds a listener that will be notified whenever an alert is triggered
+     * @param listener The listener to notify
+     */
+    public void addAlertListener(AlertListener listener)
+    {
+    		alertListeners.add(listener);
+    }
+    
+    /** 
+     * Logs and stores the given alert 
+     * @param hits The total number of hits when the alert was triggered
+     * @param recovery If true, create a recovery alert. Otherwise, create a critical alert
+     * @param currentTime The timestamp when the alert is triggered
+     */
+    private void addAlert(int hits, boolean recovery, long currentTime)
+    {
+        Alert alert = new Alert(hits, recovery, currentTime);
+        // Notify listeners that the alert was triggered
+        for (int i = 0; i < alertListeners.size(); i++) 
+        {
+        		alertListeners.get(i).alertTriggered(alert);
+        }
     }
     
     /**

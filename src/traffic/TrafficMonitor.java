@@ -31,13 +31,12 @@ public class TrafficMonitor
             return;
         }
         
-        // Start a thread to manage metrics and monitor throughput
-        MetricManager metricManager = new MetricManager(
+        // Create a manager for metrics that monitors throughput
+        MetricManager metricManager = new MetricManager();
+        metricManager.addThroughputMonitor(
                 HIGH_TRAFFIC_RPS_THRESHOLD, 
                 HIGH_TRAFFIC_TIME_WINDOW, 
                 MONITOR_THROUGHPUT_INTERVAL);
-        Thread metricManagerThread = new Thread(metricManager);
-        metricManagerThread.start();
         
         // Create a reader for the log file
         File file = new File(args[0]);

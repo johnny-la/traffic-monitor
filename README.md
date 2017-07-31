@@ -1,6 +1,6 @@
 # Traffic Monitor
 
-Monitors traffic from an Apache HTTP log
+Monitors traffic from HTTP logs written in NCSA Common Log Format
 
 ## Setup
 ```

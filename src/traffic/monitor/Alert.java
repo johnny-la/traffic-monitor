@@ -18,20 +18,33 @@ public class Alert
      */
     public Alert(int hits, boolean recovery)
     {
-        this.hits = hits;
-        this.recovery = recovery;
-        
-        timestamp = System.currentTimeMillis();
-        date = getCurrentDate();
+        this(hits, recovery, System.currentTimeMillis());
     }
     
     /**
-     * Returns the current date in a human-readable format
-     * @return The current date 
+     * Creates an alert at the given timestamp
+     * @param hits The number of website hits when the alert was triggered
+     * @param recovery True if this is a recovery alert. Else this is a critical alert
+     * @param timestamp The timestamp when this alert was triggered
      */
-    private String getCurrentDate()
+    public Alert(int hits, boolean recovery, long timestamp)
+    {
+        this.hits = hits;
+        this.recovery = recovery;
+        
+        this.timestamp = timestamp;
+        date = getDate(timestamp);
+    }
+    
+    /**
+     * Converts the timestamp into a human-readable date
+     * @param timestamp The timestamp to convert to a date
+     * @return The timestamp in date format
+     */
+    private String getDate(long timestamp)
     {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
         return DATE_FORMATTER.format(calendar.getTime());
     }
     
@@ -50,6 +63,8 @@ public class Alert
     
     public boolean equals(Alert other)
     {
-        return this.recovery == other.recovery && this.hits == other.hits;
+        return this.recovery == other.recovery 
+                && this.hits == other.hits
+                && this.timestamp == other.timestamp;
     }
 }

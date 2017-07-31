@@ -40,7 +40,7 @@ public class TrafficMonitor
         Thread metricManagerThread = new Thread(metricManager);
         metricManagerThread.start();
         
-        // Create a reader for the log file
+        // Create a parser for the log file
         File file = new File(args[0]);
         LogParser logParser = new LogParser(metricManager);
         Tailer tailer = Tailer.create(file, logParser);

@@ -4,8 +4,11 @@ import java.util.HashSet;
 
 public class Website
 {
+    /** The hostname of the website */
     private String name;
+    /** The sections of this website that were hit */
     private HashSet<String> sections;
+    /** The total number of times this website was hit */
     private int hits;
     
     public Website()
@@ -36,19 +39,27 @@ public class Website
     }
     
     /**
-     * Adds a section of the form "pages" to the website
-     * @param section
+     * Adds a section to the website
+     * @param section A section of the website that was hit
      */
     public void addSection(String section)
     {
         sections.add(section);
     }
     
+    /**
+     * Returns a list of all website sections that received a request 
+     * @return The sections that were hit
+     */
     public HashSet<String> getSections()
     {
         return sections;
     }
     
+    /**
+     * Returns the hostname of the website
+     * @return The website's hostname
+     */
     public String getName()
     {
         return name;

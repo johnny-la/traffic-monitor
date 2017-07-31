@@ -7,15 +7,20 @@ import java.util.HashSet;
  */
 public class Metrics
 {
-    public HashMap<String, Website> websites;    // The websites which received requests
-    public int maxSiteHits;    // Max hits for a website
-    public Website maxSite;    // Website with max hits
+    /** The websites which received requests */
+    public HashMap<String, Website> websites; 
+    /** Max hits for a website */
+    public int maxSiteHits;    
+    /** Website with max hits */
+    public Website maxSite;    
     
+    /** Histogram of status code occurrences */
     public HashMap<Character, Integer> statusCodeCounts;
+    /** Total requests logged since this metrics object was last reset */
     public int totalRequests;
-    public int invalidLogs;
     
-    public long startTime;    // The timestamp when the metrics started to be recorded
+    /** The timestamp when the metrics started to be recorded */
+    private long startTime;    
     
     public Metrics()
     {
@@ -25,13 +30,15 @@ public class Metrics
         reset();
     }
     
+    /**
+     * Resets all the metrics to default
+     */
     public void reset()
     {
         maxSiteHits = 0;
         maxSite = null;
         statusCodeCounts.clear();
         totalRequests = 0;
-        invalidLogs = 0;
         
         startTime = System.currentTimeMillis();
     }
@@ -54,7 +61,7 @@ public class Metrics
     
     /**
      * Returns the percentage of requests that returned a 2xx status
-     * @return A percentage string of successful responses
+     * @return A percentage of successful responses as a string
      */
     public String getSuccessPercent()
     {
@@ -67,12 +74,12 @@ public class Metrics
      */
     private double getSuccessRate()
     {
-        return (statusCodeCounts.containsKey('2'))? statusCodeCounts.get('2')/(float)totalRequests: 0.0;
+        return (statusCodeCounts.containsKey('2'))? statusCodeCounts.get('2')/(double)totalRequests: 0.0;
     }
     
     /**
-     * Returns the average requests per second since the start
-     * @return The average RPS since starting to record the metrics
+     * Returns the average requests per second since the last reset
+     * @return The average RPS since the metrics were last reset
      */
     public double getRequestsPerSecond()
     {

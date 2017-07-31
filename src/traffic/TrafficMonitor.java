@@ -1,8 +1,13 @@
+package traffic;
 import java.io.File;
 import java.util.Scanner;
 
 import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
+
+import traffic.log.LogParser;
+import traffic.metrics.MetricManager;
+import traffic.utils.MetricPrinter;
 
 public class TrafficMonitor
 {

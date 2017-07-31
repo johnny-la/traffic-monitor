@@ -1,6 +1,9 @@
+package traffic.metrics;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import traffic.log.Log;
 
 public class MetricManager implements Runnable
 {	

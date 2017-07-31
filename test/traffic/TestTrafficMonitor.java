@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import traffic.log.Log;
-import traffic.metrics.Alert;
-import traffic.metrics.MetricManager;
+import traffic.monitor.Alert;
+import traffic.monitor.MetricManager;
 
 public class TestTrafficMonitor 
 {

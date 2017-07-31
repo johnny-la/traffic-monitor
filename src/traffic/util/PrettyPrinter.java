@@ -1,4 +1,4 @@
-package traffic.utils;
+package traffic.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 

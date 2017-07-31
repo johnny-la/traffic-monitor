@@ -1,11 +1,11 @@
-package traffic.utils;
+package traffic.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import traffic.metrics.Alert;
-import traffic.metrics.MetricManager;
-import traffic.metrics.Metrics;
+import traffic.monitor.Alert;
+import traffic.monitor.MetricManager;
+import traffic.monitor.Metrics;
 
 /**
  * Prints metrics at a desired interval

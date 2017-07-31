@@ -1,11 +1,11 @@
-package traffic;
-
+package traffic.monitor;
 import java.io.File;
+import java.util.Scanner;
 
 import org.apache.commons.io.input.Tailer;
+import org.apache.commons.io.input.TailerListenerAdapter;
 
 import traffic.log.LogParser;
-import traffic.monitor.MetricManager;
 import traffic.util.MetricPrinter;
 
 public class TrafficMonitor

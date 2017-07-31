@@ -1,4 +1,4 @@
-package traffic.metrics;
+package traffic.monitor;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;

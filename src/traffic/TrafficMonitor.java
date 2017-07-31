@@ -16,16 +16,15 @@ public class TrafficMonitor
     /** Milliseconds to wait between monitoring throughput */
     private static final long MONITOR_THROUGHPUT_INTERVAL = 100;
     /** Milliseconds to wait between printing metrics */
-    private static final long METRIC_PRINT_INTERVAL = 2000;
+    private static final long METRIC_PRINT_INTERVAL = 10000;
     
     /** If RPS surpasses this value, log a warning */
-    private static final double HIGH_TRAFFIC_RPS_THRESHOLD = 70.0;
+    private static final double HIGH_TRAFFIC_RPS_THRESHOLD = 1000.0;
     /** The time window (in milliseconds) for which high traffic is detected */
-    private static final long HIGH_TRAFFIC_TIME_WINDOW = 12000;
+    private static final long HIGH_TRAFFIC_TIME_WINDOW = 120000;
     
     public static void main(String[] args) throws Exception
     {
-        args = new String[]{"test.log"};
         if (args.length < 1)
         {
             System.out.println("Error: expecting a log file");
@@ -42,6 +41,11 @@ public class TrafficMonitor
         
         // Create a reader for the log file
         File file = new File(args[0]);
+        if (!file.exists())
+        {
+            System.out.println("Error: File does not exist: " + args[0]);
+            System.exit(1);
+        }
         LogProcessor logProcessor = new LogProcessor(metricManager);
         Tailer tailer = Tailer.create(file, logProcessor);
         

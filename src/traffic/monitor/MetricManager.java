@@ -51,31 +51,6 @@ public class MetricManager
     }
     
     /**
-     * Creates a monitor which analyzes throughput for critical values
-     * @param highTrafficRpsThreshold If average RPS surpasses this value, create an alert 
-     * @param highTrafficTimeWindow The time window (in milliseconds) for which high traffic is detected
-     * @param delay Every "delay" milliseconds, throughput is monitored for high traffic
-     */
-    public void addThroughputMonitor(double highTrafficRpsThreshold, long highTrafficTimeWindow, long delay)
-    {
-        // Create the throughput monitor
-        ThroughputMonitor monitor = new ThroughputMonitor(highTrafficRpsThreshold, highTrafficTimeWindow, delay);
-        throughputMonitors.add(monitor);
-            
-        // Listen to throughput alerts 
-        monitor.addAlertListener(new AlertListener() {
-            public void alertTriggered(Alert alert)
-            {
-                addAlert(alert);
-            }
-        });
-        
-        // Start monitoring throughput in a new thread
-        Thread monitorThread = new Thread(monitor);
-        monitorThread.start();
-    }
-    
-    /**
      * Updates the given metrics based on the contents of the log line 
      * @param log The log line to analyze
      * @param metrics The metrics to update
@@ -135,6 +110,31 @@ public class MetricManager
             metrics.statusCodeCounts.put(statusCodeFirstDigit, 0);
         }
         metrics.statusCodeCounts.put(statusCodeFirstDigit, metrics.statusCodeCounts.get(statusCodeFirstDigit)+1);
+    }
+    
+    /**
+     * Creates a monitor which analyzes throughput for critical values
+     * @param highTrafficRpsThreshold If average RPS surpasses this value, create an alert 
+     * @param highTrafficTimeWindow The time window (in milliseconds) for which high traffic is detected
+     * @param delay Every "delay" milliseconds, throughput is monitored for high traffic
+     */
+    public void addThroughputMonitor(double highTrafficRpsThreshold, long highTrafficTimeWindow, long delay)
+    {
+        // Create the throughput monitor
+        ThroughputMonitor monitor = new ThroughputMonitor(highTrafficRpsThreshold, highTrafficTimeWindow, delay);
+        throughputMonitors.add(monitor);
+            
+        // Listen to throughput alerts 
+        monitor.addAlertListener(new AlertListener() {
+            public void alertTriggered(Alert alert)
+            {
+                addAlert(alert);
+            }
+        });
+        
+        // Start monitoring throughput in a new thread
+        Thread monitorThread = new Thread(monitor);
+        monitorThread.start();
     }
     
     /** 

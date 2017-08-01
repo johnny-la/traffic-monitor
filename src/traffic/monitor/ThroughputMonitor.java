@@ -74,7 +74,7 @@ public class ThroughputMonitor implements Runnable
     public void update(long currentTime)
     {
         if (currentTime < 0)
-            throw new IllegalArgumentException("Cannot update with negative timestamp");
+            throw new IllegalArgumentException("Cannot perform update with negative timestamp");
         
         expireOldRequests(currentTime);
         double requestsPerSecond = getCurrentRps();

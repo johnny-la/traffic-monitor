@@ -1,6 +1,5 @@
 package traffic;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -109,6 +108,38 @@ public class TestTrafficMonitor
                 new Alert(thresholdRequestCount * 5, false, alertTimes.get(2)), 
                 new Alert(0, true, alertTimes.get(3))}, 
                 monitor.getAlerts());
+    }
+    
+    /**
+     * Passes illegal arguments to the monitoring methods and expects failure
+     */
+    @Test
+    public void testIllegalArguments()
+    {
+        // Test a throughput monitor with negative metrics
+        try 
+        {
+            ThroughputMonitor monitor = new ThroughputMonitor(-1,-1,-1);
+            org.junit.Assert.fail("Expected IllegalArgumentException, but method succeeded");
+        }
+        catch (IllegalArgumentException e) {}
+        
+        ThroughputMonitor monitor = new ThroughputMonitor(10, 10, 10);
+        // Test requests with negative timestamps
+        try 
+        {
+            monitor.addRequest(-1);
+            org.junit.Assert.fail("Expected IllegalArgumentException, but method succeeded");
+        }
+        catch (IllegalArgumentException e) {}
+        
+        // Test update() with a negative timestamp
+        try 
+        {
+            monitor.update(-1);
+            org.junit.Assert.fail("Expected IllegalArgumentException, but method succeeded");
+        }
+        catch (IllegalArgumentException e) {}
     }
 
     /**

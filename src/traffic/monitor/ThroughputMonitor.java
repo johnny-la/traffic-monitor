@@ -34,6 +34,9 @@ public class ThroughputMonitor implements Runnable
      */
     public ThroughputMonitor(double highTrafficRpsThreshold, long highTrafficTimeWindow, long delay)
     {
+        if (highTrafficRpsThreshold < 0 || highTrafficTimeWindow < 0 || delay <= 0)
+            throw new IllegalArgumentException("ThroughputMonitor does not accept negative parameters");
+        
         this.highTrafficRpsThreshold = highTrafficRpsThreshold;
         this.highTrafficTimeWindow = highTrafficTimeWindow;
         this.delay = delay;
@@ -70,6 +73,9 @@ public class ThroughputMonitor implements Runnable
      */
     public void update(long currentTime)
     {
+        if (currentTime < 0)
+            throw new IllegalArgumentException("Cannot update with negative timestamp");
+        
         expireOldRequests(currentTime);
         double requestsPerSecond = getCurrentRps();
 
@@ -94,6 +100,9 @@ public class ThroughputMonitor implements Runnable
      */
     public void addRequest(long currentTime)
     {
+        if (currentTime < 0)
+            throw new IllegalArgumentException("Cannot add a request with a negative timestamp");
+        
         requestTimestamps.offer(currentTime);
     }
     
